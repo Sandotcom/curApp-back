@@ -1,4 +1,5 @@
 import Event from "../models/event.js"
+import Product from '../models/Product.js'
 
 export const getEvent = async (req, res) => {
   const { id } = req.params
@@ -67,6 +68,7 @@ export const deleteEvent = async (req, res) => {
     if(!eventToDelete) return res.status(400).json({ message: "Event not found" })
     
     await Event.findByIdAndDelete(id)
+    await Product.deleteMany({ eventId: id })
     return res.status(200).json({ message: "Event has been deleted" })    
   } catch (error) {
     return res.status(400).json({ message: error.message })
