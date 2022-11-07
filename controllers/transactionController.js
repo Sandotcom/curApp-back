@@ -2,14 +2,14 @@ export const getTransaction = async (req, res) => {
 
 }
 
-export const newEvent = async (req, res) => {
+export const newTransaction = async (req, res) => {
 
 }
 
-export const updateEvent = async (req, res) => {
+export const updateTransaction = async (req, res) => {
 
 }
 
-export const deleteEvent = async (req, res) => {
+export const deleteTransaction = async (req, res) => {
   
 }

@@ -6,6 +6,4 @@ const productSchema = mongoose.Schema({
   price: { type: Number, required: true }
 })
 
-const Product = mongoose.model('Product', productSchema)
-
-export default Product
+export default mongoose.model('Product', productSchema)

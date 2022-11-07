@@ -7,6 +7,4 @@ const transactionSchema = mongoose.Schema({
   products: [{ id: String, qty: Number }]
 })
 
-const Transaction = mongoose.model('Transaction', transactionSchema)
-
-export default Transaction
+export default mongoose.model('Transaction', transactionSchema)
