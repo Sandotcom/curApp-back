@@ -6,7 +6,7 @@ export const getProducts = async (req, res) => {
   try {
     const products = await Product.find({ eventId })
 
-    if(!products) return res.status(400).json({ message: "Error retrieving information" })
+    if(products.length === 0) return res.status(400).json({ message: "Error retrieving information" })
     
     return res.status(200).send(products)
   } catch (error) {

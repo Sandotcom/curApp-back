@@ -1,5 +1,6 @@
 import Event from "../models/event.js"
 import Product from '../models/Product.js'
+import Transaction from "../models/Transaction.js"
 
 export const getEvent = async (req, res) => {
   const { id } = req.params
@@ -18,8 +19,6 @@ export const getEvent = async (req, res) => {
 export const getEvents = async (req, res) => {
   try {
     const events = await Event.find()
-
-    if(!events) return res.status(400).json({ message: "Error retrieving information" })
     
     return res.status(200).send(events)
   } catch (error) {
@@ -68,7 +67,11 @@ export const deleteEvent = async (req, res) => {
     if(!eventToDelete) return res.status(400).json({ message: "Event not found" })
     
     await Event.findByIdAndDelete(id)
+
     await Product.deleteMany({ eventId: id })
+
+    await Transaction.deleteMany({ eventId: id })
+    
     return res.status(200).json({ message: "Event has been deleted" })    
   } catch (error) {
     return res.status(400).json({ message: error.message })
