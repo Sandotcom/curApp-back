@@ -1,4 +1,4 @@
-import Event from "../models/event.js"
+import Event from "../models/Event.js"
 import Product from '../models/Product.js'
 import Transaction from "../models/Transaction.js"
 
