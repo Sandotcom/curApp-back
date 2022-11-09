@@ -5,4 +5,6 @@ const eventSchema = mongoose.Schema({
   date: { type: String, required: true }
 })
 
-export default mongoose.model('Event', eventSchema);
+const Event = mongoose.model('Event', eventSchema)
+
+export default Event
