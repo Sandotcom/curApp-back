@@ -1,3 +1,5 @@
+import createError from 'http-errors';
+import catchAsync from '../middlewares/catchAsync.js'
 import Transaction from '../models/Transaction.js'
 
 export const getTransactions = async (req, res) => {
@@ -44,16 +46,16 @@ export const updateTransaction = async (req, res) => {
   }
 }
 
-export const deleteTransaction = async (req, res) => {
-  const { id } = req.params
-  try {
-    const transactionToDelete = await Transaction.findById(id)
+export const deleteTransaction = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
 
-    if(!transactionToDelete) return res.status(400).json({ message: "Transaction not found" })
-    
-    await Transaction.findByIdAndDelete(id)
-    return res.status(200).json({ message: "Transaction has been deleted" }) 
-  } catch (error) {
-    return res.status(400).json({ message: error.message })
+  const transactionDeleted = await Transaction.findByIdAndDelete(id);
+
+  if (!transactionDeleted) {
+    throw new createError(400, `Transaction '${id}' not found`);
   }
-}
+
+  return res
+    .status(200)
+    .json({ message: `Transaction '${id}' has been deleted` });
+});

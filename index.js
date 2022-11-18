@@ -1,11 +1,17 @@
-import app from './app.js'
-import dotenv from 'dotenv'
-import mongoose from 'mongoose'
-dotenv.config()
+import * as dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import app from './app.js';
+import { CONNECTION_URL, PORT } from './config/config.js';
 
-const CONNECTION_URL = process.env.CONNECTION_URL
-const PORT = process.env.PORT || 3001
+dotenv.config();
 
-mongoose.connect(CONNECTION_URL)
-  .then(() => app.listen(PORT, () => console.log(`Server running on port ${PORT}`)))
-  .catch((error) => console.log(error))
+mongoose
+  .connect(CONNECTION_URL)
+  .then(() => {
+    console.log('✔ Database connection has been established successfully.');
+    app.listen(PORT, () => console.log(`✔ Server running on port ${PORT}...`));
+  })
+  .catch((error) => {
+    console.error('✖ Unable to connect to the database :\n', error);
+    process.exit(1);
+  });
